@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/botonBuscar"
+        android:icon="@drawable/ic_buscar_foreground"
+        android:title="Buscar" />
+    <item
+        android:id="@+id/botonEliminar"
+        android:icon="@drawable/ic_eliminar_foreground"
+        android:title="Eliminar" />
+    <item
+        android:id="@+id/botonDescargar"
+        android:icon="@drawable/ic_descargar_foreground"
+        android:title="Descargar" />
+    <item
+        android:id="@+id/botonCompartir"
+        android:icon="@drawable/ic_compartir_foreground"
+        android:title="Compartir" />
+</menu>
