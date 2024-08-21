@@ -1,5 +1,6 @@
 package com.example.botomappbar;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -7,57 +8,76 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.botomappbar.fragments.BuscarFragment;
 import com.example.botomappbar.fragments.CompartirFragment;
 import com.example.botomappbar.fragments.DescargarFragment;
 import com.example.botomappbar.fragments.EliminarFragment;
+import com.example.botomappbar.model.User;
+import com.example.botomappbar.viewmodel.UserViewModel;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
+import com.google.gson.Gson;
 
 public class MainActivity extends AppCompatActivity {
+
+    private MaterialToolbar toolbar;
+    private TextView toolbarTitle;
+    private ImageButton menuButton;
+    private BottomAppBar bottomAppBar;
+    private BottomNavigationView bottomNavigationView;
+
+    private UserViewModel userViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Intent intent = getIntent();
+        String data = intent.getStringExtra("userDesdeLogin");
+        User user = new Gson().fromJson(data, User.class);
+
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+        userViewModel.setUser(user);
+
+
+        configurarActivity();
+
+    }
+
+    private void configurarActivity() {
+
         // Configurar barra de herramientas
-        MaterialToolbar toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle("");
 
         // Configurar título de la barra de herramientas
-        TextView toolbarTitle = findViewById(R.id.toolbar_title);
+        toolbarTitle = findViewById(R.id.toolbar_title);
         //toolbarTitle.setText(R.string.app_name);
 
         // Configurar botón de menú de la barra de herramientas
-        ImageButton menuButton = findViewById(R.id.boton_bar_menu);
+        menuButton = findViewById(R.id.boton_bar_menu);
         menuButton.setOnClickListener(v -> {
             showPopUp(v);
         });
 
         // Configurar barra inferior
-        BottomAppBar bottomAppBar = findViewById(R.id.bottom_appbar);
+        bottomAppBar = findViewById(R.id.bottom_appbar);
         setSupportActionBar(bottomAppBar);
 
-
-
         // Configurar navegación en la barra inferior
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnItemSelectedListener((MenuItem item) -> {
 
             if(item.getItemId() == R.id.botonBuscar)
-                    replaceFragment(new BuscarFragment());
+                replaceFragment(new BuscarFragment());
             if(item.getItemId() == R.id.botonEliminar)
                 replaceFragment(new EliminarFragment());
             if(item.getItemId() == R.id.botonDescargar)
@@ -65,8 +85,6 @@ public class MainActivity extends AppCompatActivity {
             if(item.getItemId() == R.id.botonCompartir)
                 replaceFragment(new CompartirFragment());
 
-            Toast.makeText(MainActivity.this, "Has seleccionado " + item.getTitle(), Toast.LENGTH_SHORT).show();
-            // Lógica para manejar la selección de elementos en la barra inferior
             return true;
         });
 
