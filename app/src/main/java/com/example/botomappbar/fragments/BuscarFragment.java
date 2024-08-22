@@ -38,7 +38,7 @@ public class BuscarFragment extends Fragment {
         viewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
 
         viewModel.getUser().observe(this, user -> {
-            title.setText("Hola " + user.nombre + "... estas en el fragmento buscar");
+            title.setText("Hola " + user.nombre + "... tu contraseña es: " + user.contraseña );
         });
 
         botonActualizar.setOnClickListener(v -> {
@@ -47,6 +47,11 @@ public class BuscarFragment extends Fragment {
             nuevoUsuario.nombre = "Camila L. S.";
 
             viewModel.actualizarUser(nuevoUsuario);
+        });
+
+        Button botonCContraseña = view.findViewById(R.id.botonCambiarContraseña);
+        botonCContraseña.setOnClickListener(v -> {
+            viewModel.actualizarContraseña("777");
         });
 
         return view;

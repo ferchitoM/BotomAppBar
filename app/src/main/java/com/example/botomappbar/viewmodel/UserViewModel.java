@@ -8,6 +8,7 @@ import com.example.botomappbar.model.User;
 public class UserViewModel extends ViewModel {
 
     public MutableLiveData<User> user;
+    public MutableLiveData<String> text;
 
     public MutableLiveData<User> getUser() {
         return user;
@@ -22,6 +23,13 @@ public class UserViewModel extends ViewModel {
 
     public void actualizarUser(User user) {
         this.user.setValue(user);
+    }
+
+    public void actualizarContraseña(String nuevaContraseña){
+        this.user.getValue().cambiarContaseñaDB(nuevaContraseña);
+
+        //Después de cambiar la contraseña en la BD
+        this.user.setValue(this.user.getValue());
     }
 
 }

@@ -17,4 +17,9 @@ public class User {
         this.correo = correo;
         this.contraseña = contraseña;
     }
+
+    public void cambiarContaseñaDB(String nuevaContraseña){
+        //Supongamos que cambiamos la contraseña en la base de datos
+        this.contraseña = nuevaContraseña;
+    }
 }

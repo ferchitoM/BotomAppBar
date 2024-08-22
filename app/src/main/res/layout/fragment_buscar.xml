@@ -23,4 +23,12 @@
         android:layout_marginTop="50dp"
         android:text="Actualizar usuario" />
 
+    <Button
+        android:id="@+id/botonCambiarContraseña"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:layout_marginTop="150dp"
+        android:text="Cambiar contraseña" />
+
 </FrameLayout>
